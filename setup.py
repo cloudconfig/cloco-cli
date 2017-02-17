@@ -3,7 +3,7 @@ A command line interface for the cloco API.
 """
 from setuptools import find_packages, setup
 
-dependencies = ['click']
+dependencies = ['click', 'requests', 'configparser']
 
 setup(
     name='cloco-cli',
