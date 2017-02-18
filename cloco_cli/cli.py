@@ -22,10 +22,10 @@ def main():
 def init(key, secret, sub, app, env, url, reset):
     """Initializes the configuration.  Omitted parameters will leave those settings unchanged."""
     if not reset and config_exists():
-        print 'Loading config.....'
+        click.echo(click.style('Loading config.....', fg='yellow'))
         config = load_config()
     else:
-        print 'Creating config.....'
+        click.echo(click.style('Creating config.....', fg='yellow'))
         config = create_config()
 
     if key:
@@ -47,9 +47,6 @@ def init(key, secret, sub, app, env, url, reset):
 @main.command()
 def me():
     """Returns the current user's information."""
-    if not config_exists():
-        print 'Configuration not available'
-        return
     config = load_config()
     authenticate(config)
     u = '{0}/me'.format(get_url(config))
@@ -308,7 +305,7 @@ def list_configuration(sub, app):
 @click.option('--cob', help='The configuration object identifier')
 @click.option('--env', help='The environment identifier, if not supplied will use the environment stored in preferences', default='')
 @click.option('--raw', 'output', flag_value='raw', help='Return the raw configuration data with no decoding', default=True)
-@click.option('--json', 'output', flag_value='json', help='Return the configuration metadata and data as JSON')
+@click.option('--json', 'output', flag_value='json', help='Return the configuration metadata and data JSON')
 def get_configuration(sub, app, cob, env, output):
     """Retrieves the configuration objects for an application"""
     config = load_config()
@@ -360,7 +357,7 @@ def put_configuration(sub, app, cob, env, filename, data, mime_type):
             jsonfile.close()
     else:
         if not data:
-            click.echo(click.style('No filename or data found'.format(filename), fg='red'))
+            click.echo(click.style('No filename or data found', fg='red'))
             sys.exit('Invalid input.')
         body=data
     u = '{0}/{1}/configuration/{2}/{3}/{4}'.format(get_url(config), sub, app, cob, env)
@@ -623,16 +620,19 @@ def create_config():
 
 def print_config(config):
     click.echo(click.style('Current configuration:', fg='white'))
-    print ''
+    click.echo(click.style(' ', fg='white'))
     for section in config:
         click.echo(click.style('[{0}]'.format(section), fg='white'))
         for key in config[section]:
             click.echo(click.style(key + ' = ' + config[section][key], fg='cyan'))
-        print ''
+        click.echo(click.style(' ', fg='white'))
 
 
 def load_config():
     """Loads the configuration from the ini file."""
+    if not config_exists():
+        click.echo(click.style('Configuration not available.  Run cloco init to initialize config.', fg='red'))
+        sys.exit('Configuration error.')
     config = configparser.ConfigParser()
     config.read(get_config_path())
     return config
