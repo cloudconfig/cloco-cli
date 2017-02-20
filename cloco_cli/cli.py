@@ -395,7 +395,9 @@ def get_configuration_version_history(sub, app, cob, env):
 @click.option('--cob', help='The configuration object identifier')
 @click.option('--env', help='The environment identifier, if not supplied will use the environment stored in preferences', default='')
 @click.option('--version', help='The version or revision number')
-def get_configuration_version(sub, app, cob, env, version):
+@click.option('--raw', 'output', flag_value='raw', help='Return the raw configuration data with no decoding', default=True)
+@click.option('--json', 'output', flag_value='json', help='Return the configuration metadata and data JSON')
+def get_configuration_version(sub, app, cob, env, version, output):
     """Retrieves the configuration objects for an application"""
     config = load_config()
     authenticate(config)
@@ -407,7 +409,16 @@ def get_configuration_version(sub, app, cob, env, version):
         env = config['preferences']['environment']
     u = '{0}/{1}/configuration/versions/{2}/{3}/{4}/{5}'.format(get_url(config), sub, app, cob, env, version)
     r = requests.get(u, headers=get_headers(config))
-    print_json_response(r)
+    if output == 'raw':
+        if r.status_code == 200:
+            payload = json.loads(r.text)
+            encoded = payload['configurationData']
+            click.echo(click.style(encoded, fg='green'))
+        else:
+            click.echo(click.style(r.text, fg='red'))
+            sys.exit('Request failed.')
+    else:
+        print_json_response(r)
     return
 
 @configuration_versions.command('restore')
