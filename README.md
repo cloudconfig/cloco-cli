@@ -28,17 +28,17 @@ Please read the documentation for the cloco API and the cloco CLI at [https://do
 
 To access the top-level help menu:
 
-  $ cloco --help
+    $ cloco --help
 
 # Initialization
 
 Before you use the cloco-cli to access the API you must initialize the configuration.  The minimum you must provide are the API credentials.
 
-  $ cloco init --key client_key --secret client_secret [--url api_url] [--sub subscription_identifier] [--app application_identifier] [--env environment_identifier] [--reset]
+    $ cloco init --key client_key --secret client_secret [--url api_url] [--sub subscription_identifier] [--app application_identifier] [--env environment_identifier] [--reset]
 
 Once you have initialized your configuration you can also do partial updates by supplying only the values you wish to change.  For example, the following command will only update the default subscription:
 
-  $ cloco init --sub subscription_identifier
+    $ cloco init --sub subscription_identifier
 
 ### Parameters
 
@@ -56,7 +56,7 @@ Parameter | Description | Usage
 
 To retrieve your cloco profile:
 
-  $ cloco me
+    $ cloco me
 
 ### Parameters
 
@@ -70,7 +70,7 @@ When you sign up for a subscription in cloco it allows you to manage all your ap
 
 To list the subscriptions you have access to:
 
-  $ cloco subscription list
+    $ cloco subscription list
 
 ### Parameters
 
@@ -80,7 +80,7 @@ None.
 
 To retrieve the metadata for a subscription (must be an admin):
 
-  $ cloco subscription get --sub subscription_identifier
+    $ cloco subscription get --sub subscription_identifier
 
 ### Parameters
 
@@ -92,7 +92,7 @@ Parameter | Description | Usage
 
 To create a new subscription:
 
-  $ cloco subscription create --sub subscription_identifier
+    $ cloco subscription create --sub subscription_identifier
 
 ### Parameters
 
@@ -104,7 +104,7 @@ Parameter | Description | Usage
 
 To delete a subscription and all associated data (must be an admin):
 
-  $ cloco subscription delete --sub subscription_identifier
+    $ cloco subscription delete --sub subscription_identifier
 
 ### Parameters
 
@@ -116,7 +116,7 @@ Parameter | Description | Usage
 
 Depending on your subscription level, you can have multiple users associated with a subscription.  To view the permissions associated with the subscription:
 
-  $ cloco subscription permissions list --sub subscription_identifier
+    $ cloco subscription permissions list --sub subscription_identifier
 
 ### Parameters
 
@@ -128,7 +128,7 @@ Parameter | Description | Usage
 
 To add or modify the permissions of a user on the subscription:
 
-  $ cloco subscription permissions create --sub subscription_identifier --username username [--admin | --user]
+    $ cloco subscription permissions create --sub subscription_identifier --username username [--admin | --user]
 
 ### Parameters
 
@@ -142,7 +142,7 @@ Parameter | Description | Usage
 
 To revove all permissions for a user on the subscription:
 
-  $ cloco subscription permissions delete --sub subscription_identifier --username username
+    $ cloco subscription permissions delete --sub subscription_identifier --username username
 
 ### Parameters
 
@@ -161,7 +161,7 @@ The application metadata is important for cloco in allowing us to store and retr
 
 To retrieve the applications within a subscription:
 
-  $ cloco application list --sub subscription_identifier
+    $ cloco application list --sub subscription_identifier
 
 ### Parameters
 
@@ -173,7 +173,7 @@ Parameter | Description | Usage
 
 To retrieve the application metadata:
 
-  $ cloco application get --sub subscription_identifier --app application_identifier
+    $ cloco application get --sub subscription_identifier --app application_identifier
 
 ### Parameters
 
@@ -186,7 +186,7 @@ Parameter | Description | Usage
 
 To store the application metadata:
 
-  $ cloco application put --sub subscription_identifier --app application_identifier --filename path_to_file
+    $ cloco application put --sub subscription_identifier --app application_identifier --filename path_to_file
 
 ### Parameters
 
@@ -200,7 +200,7 @@ Parameter | Description | Usage
 
 To delete the application metadata and associated configuration:
 
-  $ cloco application delete --sub subscription_identifier --app application_identifier
+    $ cloco application delete --sub subscription_identifier --app application_identifier
 
 ### Parameters
 
@@ -215,7 +215,7 @@ All subscription admins can administer applications.  If you would like to permi
 
 To list permissions on an application:
 
-  $ cloco application permissions list --sub subscription_identifier --app application_identifier
+    $ cloco application permissions list --sub subscription_identifier --app application_identifier
 
 ### Parameters
 
@@ -228,7 +228,7 @@ Parameter | Description | Usage
 
 To create or update permissions on an application:
 
-  $ cloco application permissions create --sub subscription_identifier --app application_identifier --username username
+    $ cloco application permissions create --sub subscription_identifier --app application_identifier --username username
 
 ### Parameters
 
@@ -244,7 +244,7 @@ If you revoke permissions for a user on an application they will still be regist
 
 To create or update permissions on an application:
 
-  $ cloco application permissions delete --sub subscription_identifier --app application_identifier --username username
+    $ cloco application permissions delete --sub subscription_identifier --app application_identifier --username username
 
 ### Parameters
 
@@ -262,7 +262,7 @@ Configuration is what cloco is all about.  Subscriptions and applications make i
 
 To view the configuration stored in an application:
 
-  $ cloco configuration list --sub subscription_identifier --app application_identifier
+    $ cloco configuration list --sub subscription_identifier --app application_identifier
 
 ### Parameters
 
@@ -275,7 +275,7 @@ Parameter | Description | Usage
 
 To retrieve configuration saved for a specific environment:
 
-  $ cloco configuration get --sub subscription_identifier --app application_identifier  --cob configuration_object_identifier --env environment_identifier [--raw | -json]
+    $ cloco configuration get --sub subscription_identifier --app application_identifier  --cob configuration_object_identifier --env environment_identifier [--raw | -json]
 
 ### Parameters
 
@@ -291,7 +291,7 @@ Parameter | Description | Usage
 
 To store configuration data:
 
-  $ cloco configuration put --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier [--filename path_to_file] [--data raw_data] [--mime-type mime_type]
+    $ cloco configuration put --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier [--filename path_to_file] [--data raw_data] [--mime-type mime_type]
 
 ### Parameters
 
@@ -311,24 +311,24 @@ We have designed cloco to be a secure configuration store.  However, we advise y
 
 In these examples the subscription, application and environment have all been set using cloco init:
 
-  $ cloco init --sub subscription --app application --env environment
+    $ cloco init --sub subscription --app application --env environment
 
 To encrypt and send a file using openssl:
 
-  $ CLOCO_ENCRYPTION_KEY="enter your encryption key here"
-  $ FILENAME="enter the path to the file you wish to upload"
-  $ CONFIG_OBJECT="your configuration object identifier"
-  $ cloco configuration put --cob $CONFIG_OBJECT --data $(openssl enc -aes256 -a -A -nosalt -in $FILENAME -k $CLOCO_ENCRYPTION_KEY)
+    $ CLOCO_ENCRYPTION_KEY="enter your encryption key here"
+    $ FILENAME="enter the path to the file you wish to upload"
+    $ CONFIG_OBJECT="your configuration object identifier"
+    $ cloco configuration put --cob $CONFIG_OBJECT --data $(openssl enc -aes256 -a -A -nosalt -in $FILENAME -k $CLOCO_ENCRYPTION_KEY)
 
 To retrieve and decrypt the configuration using openssl:
 
-  $ cloco configuration get --cob $CONFIG_OBJECT --raw  | openssl enc -aes256 -d -a -nosalt -k $CLOCO_ENCRYPTION_KEY
+    $ cloco configuration get --cob $CONFIG_OBJECT --raw  | openssl enc -aes256 -d -a -nosalt -k $CLOCO_ENCRYPTION_KEY
 
 ## List Configuration Versions
 
 To list the version history for configuration, for a specific environment:
 
-  $ cloco configuration versions list --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier
+    $ cloco configuration versions list --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier
 
 ### Parameters
 
@@ -343,7 +343,7 @@ Parameter | Description | Usage
 
 To retrieve a specific version from the history:
 
-  $ cloco configuration versions get --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier --version version [--raw | --json]
+    $ cloco configuration versions get --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier --version version [--raw | --json]
 
 ### Parameters
 
@@ -360,7 +360,7 @@ Parameter | Description | Usage
 
 To reinstate a previous version of configuration as the current version:
 
-  $ cloco configuration versions restore --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier --version version
+    $ cloco configuration versions restore --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier --version version
 
 ### Parameters
 
@@ -378,7 +378,7 @@ You can limit the permissions for any user to read or write configuration.  To p
 
 To list permissions on configuration:
 
-  $ cloco configuration permissions list --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier
+    $ cloco configuration permissions list --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier
 
 ### Parameters
 
@@ -393,7 +393,7 @@ Parameter | Description | Usage
 
 To create or update permissions on configuration:
 
-  $ cloco configuration permissions create --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier --username username [--read | --write]
+    $ cloco configuration permissions create --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier --username username [--read | --write]
 
 ### Parameters
 
@@ -412,7 +412,7 @@ If you revoke permissions for a user on configuration they will still be registe
 
 To create or update permissions on configuration:
 
-  $ cloco configuration permissions delete --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier --username username
+    $ cloco configuration permissions delete --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier --username username
 
 ### Parameters
 
@@ -432,7 +432,7 @@ The credentials routes in the API allow you to view and list API credentials tha
 
 To list the credentials already created under your username:
 
-  $ cloco credentials list
+    $ cloco credentials list
 
 ### Parameters
 
@@ -443,7 +443,7 @@ None.
 
 To create a new set of API credentials:
 
-  $ cloco credentials create
+    $ cloco credentials create
 
 Note that the response from this API call is the only time you are ever given the client secret.  You must save the client key and client secret as a pair in order to use them later.
 
@@ -455,7 +455,7 @@ None.
 
 To revoke credentials and prevent them from being used again:
 
-  $ cloco credentials revoke --key client_key
+    $ cloco credentials revoke --key client_key
 
 ### Parameters
 
