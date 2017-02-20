@@ -7,12 +7,14 @@ dependencies = ['click', 'requests', 'configparser']
 
 setup(
     name='cloco-cli',
-    version='0.1.0',
-    url='https://github.com/345systems/cloco-cli',
+    version='0.1.1',
     license='BSD',
     author='345 Systems',
     author_email='info@345.systems',
     description='A command line interface for the cloco API.',
+    url='https://github.com/cloudconfig/cloco-cli',
+    download_url='https://github.com/cloudconfig/cloco-cli/tarball/0.1.1',
+    keywords=['cloco', 'cloudconfig', 'configuration', 'configuration-as-a-service', 'devops']
     long_description=__doc__,
     packages=find_packages(exclude=['tests']),
     include_package_data=True,
@@ -35,7 +37,10 @@ setup(
         # 'Development Status :: 7 - Inactive',
         'Environment :: Console',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
+        'Intended Audience :: Information Technology',
+        'Intended Audience :: System Administrators',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
         'Operating System :: POSIX',
         'Operating System :: MacOS',
         'Operating System :: Unix',
@@ -44,5 +49,6 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
         'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Software Development :: Build Tools',
     ]
 )
