@@ -328,7 +328,7 @@ To retrieve and decrypt the configuration using openssl:
 
 To list the version history for configuration, for a specific environment:
 
-    $ cloco configuration versions list --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier
+    $ cloco configuration version list --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier
 
 ### Parameters
 
@@ -343,7 +343,7 @@ Parameter | Description | Usage
 
 To retrieve a specific version from the history:
 
-    $ cloco configuration versions get --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier --version version [--raw | --json]
+    $ cloco configuration version get --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier --version version [--raw | --json]
 
 ### Parameters
 
@@ -360,7 +360,7 @@ Parameter | Description | Usage
 
 To reinstate a previous version of configuration as the current version:
 
-    $ cloco configuration versions restore --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier --version version
+    $ cloco configuration version restore --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier --version version
 
 ### Parameters
 
@@ -410,7 +410,7 @@ Parameter | Description | Usage
 
 If you revoke permissions for a user on configuration they will still be registered as a user in the subscription.  
 
-To create or update permissions on configuration:
+To revoke permissions on configuration:
 
     $ cloco configuration permissions delete --sub subscription_identifier --app application_identifier --cob configuration_object_identifier --env environment_identifier --username username
 

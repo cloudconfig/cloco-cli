@@ -43,7 +43,7 @@ def init(key, secret, sub, app, env, url, reset, echo):
         config['preferences']['application'] = app
     if env:
         config['preferences']['environment'] = env
-    save_config(config)
+    save_config(config, False)
     if echo:
         print_config(config)
     return
@@ -401,7 +401,7 @@ def put_configuration(sub, app, cob, env, filename, data, mime_type):
     return
 
 
-@configuration.group('versions')
+@configuration.group('version')
 def configuration_versions():
     """A subgroup of commands for configuration version history"""
 
@@ -661,7 +661,7 @@ def authenticate(config):
             payload = json.loads(r.text)
             token = payload['access_token']
             config['credentials']['cloco_access_token'] = token
-            save_config(config)
+            save_config(config, True)
         else:
             click.echo(click.style(r.text, fg='red'))
             sys.exit('Authentication failed.')
@@ -715,9 +715,10 @@ def load_config():
     return config
 
 
-def save_config(config):
+def save_config(config, silent):
     """Saves the configuration object to disk"""
-    click.echo(click.style('Saving config.....', fg='yellow'))
+    if not silent:
+        click.echo(click.style('Saving config.....', fg='yellow'))
     with open(get_config_path(), 'w') as configfile:
         config.write(configfile)
         configfile.close()
