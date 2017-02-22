@@ -22,7 +22,7 @@ Before you can use this script you will need to have registered on cloco [https:
 
 # Documentation
 
-Please read the documentation for the cloco API and the cloco CLI at [https://docs.cloco.io/](https://docs.cloco.io/).
+Please read the documentation for the cloco API and the cloco CLI at [http://docs.cloco.io/](http://docs.cloco.io/).
 
 # Help
 
