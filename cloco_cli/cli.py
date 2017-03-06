@@ -168,6 +168,111 @@ def delete_subscription_permission(sub, username):
     return
 
 
+@subscription.group('client')
+def subscription_clients():
+    """A subgroup of commands for managing subscription clients"""
+    return
+
+
+@subscription_clients.command('list')
+@click.option('--sub', help='The subscription identifier, will use the subscription stored in the preferences if not supplied', default='')
+def list_subscription_client(sub):
+    """Returns a list of the subscription clients"""
+    config = load_config()
+    authenticate(config)
+    if not sub:
+        sub = config['preferences']['subscription']
+    u = '{0}/{1}/clients'.format(get_url(config), sub)
+    r = requests.get(u, headers=get_headers(config))
+    print_json_response(r)
+    return
+
+
+@subscription_clients.command('create')
+@click.option('--sub', help='The subscription identifier, will use the subscription stored in the preferences if not supplied', default='')
+@click.option('--name', help='The username of the client')
+def create_subscription_client(sub, name):
+    """Creates a client in the subscription."""
+    config = load_config()
+    authenticate(config)
+    if not sub:
+        sub = config['preferences']['subscription']
+    u = '{0}/{1}/clients/{2}'.format(get_url(config), sub, name)
+    body = {}
+    r = requests.put(u, data=json.dumps(body), headers=get_headers(config))
+    print_response(r)
+    return
+
+
+@subscription_clients.command('delete')
+@click.option('--sub', help='The subscription identifier, will use the subscription stored in the preferences if not supplied', default='')
+@click.option('--name', help='The username of the client')
+def delete_subscription_client(sub, name):
+    """Deletes the client from the subscription"""
+    config = load_config()
+    authenticate(config)
+    if not sub:
+        sub = config['preferences']['subscription']
+    u = '{0}/{1}/clients/{2}'.format(get_url(config), sub, name)
+    r = requests.delete(u, headers=get_headers(config))
+    print_response(r)
+    return
+
+
+@subscription_clients.group('credentials')
+def client_credentials():
+    """A subgroup of commands for managing subscription client credentials"""
+    return
+
+
+@client_credentials.command('list')
+@click.option('--sub', help='The subscription identifier, will use the subscription stored in the preferences if not supplied', default='')
+@click.option('--name', help='The username of the client')
+def list_client_credentials(sub, name):
+    """Returns a list of the credentials the current user has access to"""
+    config = load_config()
+    authenticate(config)
+    if not sub:
+        sub = config['preferences']['subscription']
+    u = '{0}/{1}/clients/{2}/credentials'.format(get_url(config), sub, name)
+    r = requests.get(u, headers=get_headers(config))
+    print_json_response(r)
+    return
+
+
+@client_credentials.command('create')
+@click.option('--sub', help='The subscription identifier, will use the subscription stored in the preferences if not supplied', default='')
+@click.option('--name', help='The username of the client')
+def create_client_credentials(sub, name):
+    """Creates client credentials."""
+    config = load_config()
+    authenticate(config)
+    if not sub:
+        sub = config['preferences']['subscription']
+    u = '{0}/{1}/clients/{2}/credentials'.format(get_url(config), sub, name)
+    body = {'grant_type': 'client_credentials'}
+    r = requests.post(u, data=json.dumps(body), headers=get_headers(config))
+    print_json_response(r)
+    return
+
+
+@client_credentials.command('delete')
+@click.option('--sub', help='The subscription identifier, will use the subscription stored in the preferences if not supplied', default='')
+@click.option('--name', help='The username of the client')
+@click.option('--key', help='The client key of the credentials to be deleted')
+def delete_client_credentials(sub, name, key):
+    """Deletes client credentials."""
+    config = load_config()
+    authenticate(config)
+    if not sub:
+        sub = config['preferences']['subscription']
+    u = '{0}/{1}/clients/{2}/credentials/{3}'.format(
+        get_url(config), sub, name, key)
+    r = requests.delete(u, headers=get_headers(config))
+    print_response(r)
+    return
+
+
 @main.group()
 def application():
     """A subgroup of commands for applications"""
@@ -592,7 +697,7 @@ def create_credentials():
 
 @credentials.command('delete')
 @click.option('--key', help='The client key of the credentials to be deleted')
-def create_credentials(key):
+def delete_credentials(key):
     """Deletes client credentials."""
     config = load_config()
     authenticate(config)
