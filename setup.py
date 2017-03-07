@@ -7,13 +7,13 @@ dependencies = ['click', 'requests', 'configparser']
 
 setup(
     name='cloco-cli',
-    version='0.1.6',
+    version='0.1.7',
     license='BSD',
     author='345 Systems',
     author_email='info@345.systems',
     description='A command line interface for the cloco API.',
     url='https://github.com/cloudconfig/cloco-cli',
-    download_url='https://github.com/cloudconfig/cloco-cli/tarball/0.1.6',
+    download_url='https://github.com/cloudconfig/cloco-cli/tarball/0.1.7',
     keywords=['cloco', 'cloudconfig', 'configuration',
               'configuration-as-a-service', 'devops'],
     long_description=__doc__,

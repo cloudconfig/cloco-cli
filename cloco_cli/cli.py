@@ -377,7 +377,9 @@ def list_application_permissions(sub, app):
 @click.option('--sub', help='The subscription identifier, will use the subscription stored in the preferences if not supplied', default='')
 @click.option('--app', help='The application identifier, will use the application stored in preferences if not supplied', default='')
 @click.option('--username', help='The username to be added to the subscription')
-def create_application_permission(sub, app, username):
+@click.option('--admin', 'role', flag_value='admin', help='The user role (admin | read)')
+@click.option('--read', 'role', flag_value='read', help='The user role (admin | read)', default=True)
+def create_application_permission(sub, app, username, role):
     """Creates or modifies permissions in an application."""
     config = load_config()
     authenticate(config)
@@ -387,7 +389,7 @@ def create_application_permission(sub, app, username):
         app = config['preferences']['application']
     u = '{0}/{1}/applications/{2}/permissions'.format(
         get_url(config), sub, app)
-    body = {'permissionLevel': 'admin', 'identity': username}
+    body = {'permissionLevel': role, 'identity': username}
     r = requests.post(u, data=json.dumps(body), headers=get_headers(config))
     print_response(r)
     return
