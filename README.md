@@ -228,7 +228,7 @@ Parameter | Description | Usage
 
 To create or update permissions on an application:
 
-    $ cloco application permissions create --sub subscription_identifier --app application_identifier --username username
+    $ cloco application permissions create --sub subscription_identifier --app application_identifier --username username [--admin|--read]
 
 ### Parameters
 
@@ -237,6 +237,7 @@ Parameter | Description | Usage
 --sub | The ID of the subscription. | Optional if defaulted via the cloco init command.
 --app | The ID of the application. | Optional if defaulted via the cloco init command.
 --username | The username to permission. | Required. The username in cloco.
+--admin / --read | Flag. | The permission level to assign.  Defaults to 'read'.
 
 ## Revoke Application Permissions
 
